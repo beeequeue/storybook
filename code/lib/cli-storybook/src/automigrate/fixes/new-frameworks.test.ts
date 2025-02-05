@@ -3,12 +3,12 @@ import { describe, expect, it, vi } from 'vitest';
 import type { JsPackageManager } from 'storybook/internal/common';
 import type { StorybookConfig } from 'storybook/internal/types';
 
-import * as findUp from 'find-up';
+import * as find from 'empathic/find';
 
 import * as rendererHelpers from '../helpers/detectRenderer';
 import { newFrameworks } from './new-frameworks';
 
-vi.mock('find-up');
+vi.mock('empathic/find');
 vi.mock('../helpers/detectRenderer', async (importOriginal) => ({
   detectRenderer: vi.fn(
     (await importOriginal<typeof import('../helpers/detectRenderer')>()).detectRenderer
@@ -345,7 +345,7 @@ describe('new-frameworks fix', () => {
       });
 
       // project contains vite.config.js
-      vi.spyOn(findUp, 'default').mockReturnValueOnce(Promise.resolve('vite.config.js'));
+      vi.spyOn(find, 'any').mockReturnValueOnce('vite.config.js');
       await expect(
         checkNewFrameworks({
           packageManager,
@@ -418,7 +418,7 @@ describe('new-frameworks fix', () => {
     });
 
     it('skips if project already has @storybook/nextjs set up', async () => {
-      vi.spyOn(findUp, 'default').mockReturnValueOnce(Promise.resolve('next.config.js'));
+      vi.spyOn(find, 'any').mockReturnValueOnce('next.config.js');
 
       const packageManager = getPackageManager({
         '@storybook/react': '7.0.0',
@@ -440,7 +440,7 @@ describe('new-frameworks fix', () => {
         next: '12.0.0',
       });
 
-      vi.spyOn(findUp, 'default').mockReturnValueOnce(Promise.resolve('next.config.js'));
+      vi.spyOn(find, 'any').mockReturnValueOnce('next.config.js');
       await expect(
         checkNewFrameworks({
           packageManager,
@@ -458,7 +458,7 @@ describe('new-frameworks fix', () => {
     });
 
     it('should remove legacy addons', async () => {
-      vi.spyOn(findUp, 'default').mockReturnValueOnce(Promise.resolve('next.config.js'));
+      vi.spyOn(find, 'any').mockReturnValueOnce('next.config.js');
       const packageManager = getPackageManager({
         '@storybook/react': '7.0.0-alpha.0',
         '@storybook/react-webpack5': '7.0.0-alpha.0',
@@ -488,7 +488,7 @@ describe('new-frameworks fix', () => {
     });
 
     it('should move storybook-addon-next options and reactOptions to frameworkOptions', async () => {
-      vi.spyOn(findUp, 'default').mockReturnValueOnce(Promise.resolve('next.config.js'));
+      vi.spyOn(find, 'any').mockReturnValueOnce('next.config.js');
 
       const packageManager = getPackageManager({
         '@storybook/react': '7.0.0-alpha.0',
@@ -536,7 +536,7 @@ describe('new-frameworks fix', () => {
     });
 
     it('should migrate to @storybook/react-vite in Next.js project that uses vite builder', async () => {
-      vi.spyOn(findUp, 'default').mockReturnValueOnce(Promise.resolve('next.config.js'));
+      vi.spyOn(find, 'any').mockReturnValueOnce('next.config.js');
 
       const packageManager = getPackageManager({
         '@storybook/react': '7.0.0-alpha.0',

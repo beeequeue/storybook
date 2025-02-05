@@ -2,14 +2,14 @@ import { describe, expect, it, vi } from 'vitest';
 
 import type { JsPackageManager } from 'storybook/internal/common';
 
-import * as findUp from 'find-up';
+import * as find from 'empathic/find';
 
 import {
   detectBuilderInfo as _getBuilderInfo,
   getNextjsAddonOptions,
 } from './new-frameworks-utils';
 
-vi.mock('find-up');
+vi.mock('empathic/find');
 
 type GetBuilderInfoParams = Parameters<typeof _getBuilderInfo>[0]['mainConfig'];
 
@@ -170,9 +170,7 @@ describe('getBuilderInfo', () => {
   });
 
   it('when main.js has legacy renderer as framework, it should infer vite info from vite config file', async () => {
-    const findUpSpy = vi
-      .spyOn(findUp, 'default')
-      .mockReturnValueOnce(Promise.resolve('vite.config.js'));
+    const findUpSpy = vi.spyOn(find, 'any').mockReturnValueOnce('vite.config.js');
     await expect(getBuilderInfo({ mainConfig: { framework: 'react' } })).resolves.toEqual({
       name: 'vite',
       options: {},
@@ -182,9 +180,9 @@ describe('getBuilderInfo', () => {
 
   it('when main.js has legacy renderer as framework, it should infer webpack info from webpack config file', async () => {
     const findUpSpy = vi
-      .spyOn(findUp, 'default')
-      .mockReturnValueOnce(Promise.resolve(undefined))
-      .mockReturnValueOnce(Promise.resolve('webpack.config.js'));
+      .spyOn(find, 'any')
+      .mockReturnValueOnce(undefined)
+      .mockReturnValueOnce('webpack.config.js');
     await expect(getBuilderInfo({ mainConfig: { framework: 'react' } })).resolves.toEqual({
       name: 'webpack5',
       options: {},
@@ -193,9 +191,7 @@ describe('getBuilderInfo', () => {
   });
 
   it('when main.js has no builder or framework, it should infer vite info from vite config file', async () => {
-    const findUpSpy = vi
-      .spyOn(findUp, 'default')
-      .mockReturnValueOnce(Promise.resolve('vite.config.js'));
+    const findUpSpy = vi.spyOn(find, 'any').mockReturnValueOnce('vite.config.js');
     await expect(getBuilderInfo({ mainConfig: {} })).resolves.toEqual({
       name: 'vite',
       options: {},
@@ -205,9 +201,9 @@ describe('getBuilderInfo', () => {
 
   it('when main.js has no builder or framework, it should infer webpack info from webpack config file', async () => {
     const findUpSpy = vi
-      .spyOn(findUp, 'default')
-      .mockReturnValueOnce(Promise.resolve(undefined))
-      .mockReturnValueOnce(Promise.resolve('webpack.config.js'));
+      .spyOn(find, 'any')
+      .mockReturnValueOnce(undefined)
+      .mockReturnValueOnce('webpack.config.js');
     await expect(getBuilderInfo({ mainConfig: {} })).resolves.toEqual({
       name: 'webpack5',
       options: {},
@@ -216,7 +212,7 @@ describe('getBuilderInfo', () => {
   });
 
   it('when main.js has no builder or framework, and there is no vite or webpack config, infer vite from dependencies', async () => {
-    const findUpSpy = vi.spyOn(findUp, 'default').mockReturnValue(Promise.resolve(undefined));
+    const findUpSpy = vi.spyOn(find, 'any').mockReturnValue(undefined);
     await expect(
       getBuilderInfo({
         mainConfig: {},
@@ -237,7 +233,7 @@ describe('getBuilderInfo', () => {
   });
 
   it('when main.js has no builder or framework, and there is no vite or webpack config, infer webpack from dependencies', async () => {
-    const findUpSpy = vi.spyOn(findUp, 'default').mockReturnValue(Promise.resolve(undefined));
+    const findUpSpy = vi.spyOn(find, 'any').mockReturnValue(undefined);
     await expect(
       getBuilderInfo({
         mainConfig: {},

@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { frameworkToRenderer } from 'storybook/internal/cli';
 import { frameworkPackages } from 'storybook/internal/common';
 
-import findUp from 'find-up';
+import * as find from 'empathic/find';
 import { dedent } from 'ts-dedent';
 
 import { getFrameworkPackageName } from '../helpers/mainConfigFile';
@@ -22,10 +22,10 @@ export const viteConfigFile = {
   promptType: 'notification',
 
   async check({ mainConfig, packageManager, mainConfigPath }) {
-    let isViteConfigFileFound = !!(await findUp(
+    let isViteConfigFileFound = !!find.any(
       ['vite.config.js', 'vite.config.mjs', 'vite.config.cjs', 'vite.config.ts', 'vite.config.mts'],
       { cwd: mainConfigPath ? join(mainConfigPath, '..') : process.cwd() }
-    ));
+    );
 
     const rendererToVitePluginMap: Record<string, string> = {
       preact: '@preact/preset-vite',

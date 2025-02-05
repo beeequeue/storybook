@@ -2,7 +2,7 @@ import { frameworkPackages } from 'storybook/internal/common';
 import type { JsPackageManager } from 'storybook/internal/common';
 import type { Preset, StorybookConfigRaw } from 'storybook/internal/types';
 
-import findUp from 'find-up';
+import * as find from 'empathic/find';
 
 import { getBuilderPackageName, getFrameworkPackageName } from './mainConfigFile';
 
@@ -90,14 +90,14 @@ export const detectBuilderInfo = async ({
 
   // if there is no builder or framework field, we look for config files instead
   if (!builderOrFrameworkName) {
-    const viteConfigFile = await findUp(viteConfigFiles, { cwd: configDir });
+    const viteConfigFile = find.any(viteConfigFiles, { cwd: configDir });
     if (viteConfigFile) {
       logger.info(
         `No builder or framework field, detected Storybook builder via: ${viteConfigFile}`
       );
       builderOrFrameworkName = 'vite';
     } else {
-      const webpackConfigFile = await findUp(webpackConfigFiles, { cwd: configDir });
+      const webpackConfigFile = find.any(webpackConfigFiles, { cwd: configDir });
       if (webpackConfigFile) {
         logger.info(
           `No builder or framework field, detected Storybook builder via: ${webpackConfigFile}`
