@@ -23,7 +23,7 @@ import { getStorySortParameter, loadConfig } from '@storybook/core/csf-tools';
 import { logger, once } from '@storybook/core/node-logger';
 import { sortStoriesV7, userOrAutoTitleFromSpecifier } from '@storybook/core/preview-api';
 
-import { findUp } from 'find-up';
+import * as find from 'empathic/find';
 import picocolors from 'picocolors';
 import slash from 'slash';
 import invariant from 'tiny-invariant';
@@ -356,7 +356,7 @@ export class StoryIndexGenerator {
     invariant(indexer, `No matching indexer found for ${absolutePath}`);
 
     const indexInputs = await indexer.createIndex(absolutePath, { makeTitle: defaultMakeTitle });
-    const tsconfigPath = await findUp('tsconfig.json', { cwd: this.options.workingDir });
+    const tsconfigPath = find.up('tsconfig.json', { cwd: this.options.workingDir });
     const tsconfig = TsconfigPaths.loadConfig(tsconfigPath);
     let matchPath: TsconfigPaths.MatchPath | undefined;
     if (tsconfig.resultType === 'success') {

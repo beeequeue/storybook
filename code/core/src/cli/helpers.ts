@@ -11,7 +11,7 @@ import {
 import { versions as storybookMonorepoPackages } from '@storybook/core/common';
 import type { SupportedFrameworks, SupportedRenderers } from '@storybook/core/types';
 
-import { findUpSync } from 'find-up';
+import * as find from 'empathic/find';
 import picocolors from 'picocolors';
 import { coerce, major, satisfies } from 'semver';
 import stripJsonComments from 'strip-json-comments';
@@ -313,7 +313,7 @@ export function getStorybookVersionSpecifier(packageJson: PackageJsonWithDepsAnd
 }
 
 export async function isNxProject() {
-  return findUpSync('nx.json');
+  return find.up('nx.json');
 }
 
 export function coerceSemver(version: string) {
