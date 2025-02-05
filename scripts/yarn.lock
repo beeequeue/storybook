@@ -1486,6 +1486,7 @@ __metadata:
     diff-match-patch-es: "npm:^0.1.0"
     ejs: "npm:^3.1.10"
     ejs-lint: "npm:^2.0.0"
+    empathic: "npm:^1.0.0"
     es-toolkit: "npm:^1.22.0"
     esbuild: "npm:^0.24.0"
     esbuild-plugin-alias: "npm:^0.2.1"
@@ -1506,7 +1507,6 @@ __metadata:
     execa: "npm:^6.1.0"
     fast-folder-size: "npm:^2.2.0"
     fast-glob: "npm:^3.3.2"
-    find-up: "npm:^5.0.0"
     fs-extra: "npm:^11.2.0"
     github-release-from-changelog: "npm:^2.1.1"
     glob: "npm:^10.4.5"
@@ -5021,6 +5021,13 @@ __metadata:
   version: 9.2.2
   resolution: "emoji-regex@npm:9.2.2"
   checksum: 10c0/af014e759a72064cf66e6e694a7fc6b0ed3d8db680427b021a89727689671cefe9d04151b2cad51dbaf85d5ba790d061cd167f1cf32eb7b281f6368b3c181639
+  languageName: node
+  linkType: hard
+
+"empathic@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "empathic@npm:1.0.0"
+  checksum: 10c0/9686420a198f7ab60e73dfe2646c75d3cc5b3530f85a68405973f19072dc94874c3eca2878b99912fd76d2bd1744229313fa533d1aa7be1ea75a78a8c99bfbc9
   languageName: node
   linkType: hard
 
