@@ -25,7 +25,10 @@ vi.doMock('storybook/internal/common', () => ({
     storybook: 'x.x.x',
   },
 }));
-vi.doMock('find-up', () => ({ sync: () => './storybook/tsconfig.ts' }));
+vi.doMock(
+  'empathic/find',
+  () => ({ up: () => './storybook/tsconfig.ts' }) satisfies Partial<typeof import('empathic/find')>
+);
 
 const mockRunScript = vi.fn();
 
