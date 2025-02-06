@@ -1,12 +1,6 @@
-import resolveFrom from 'resolve-from';
+import * as resolve from 'empathic/resolve';
 
-export const safeResolveFrom = (path: string, file: string) => {
-  try {
-    return resolveFrom(path, file);
-  } catch (e) {
-    return undefined;
-  }
-};
+export const safeResolveFrom = (path: string, file: string) => resolve.from(path, file, true);
 
 export const safeResolve = (file: string) => {
   try {
